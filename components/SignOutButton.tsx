@@ -1,7 +1,12 @@
 "use client";
+import { Button } from "@mantine/core";
 
 import { signOut } from "next-auth/react";
 
 export default function SignOutButton() {
-  return <button onClick={() => signOut()}>Log Out</button>;
+  return (
+    <Button variant="fileed" onClick={() => signOut()}>
+      Log Out
+    </Button>
+  );
 }

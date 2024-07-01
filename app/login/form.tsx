@@ -1,10 +1,10 @@
 "use client";
-import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import AuthForm from "@/components/AuthForm";
 import { useState } from "react";
+import { Anchor } from "@mantine/core";
 
 interface Data {
   email?: string;
@@ -34,16 +34,16 @@ export default function LoginForm() {
     <>
       {error && <p>{error}</p>}
       <AuthForm
-        title="Login here"
+        title="Log in"
         onSubmit={handleFormSubmit}
-        buttonText="Login"
+        buttonText="Log in"
         linkDescription="New here?"
         linkText="Create an account"
         linkHref="/register"
         isFullForm={false}
       />
       <div>
-        <Link href="/request-reset-password">Forgot password?</Link>
+        <Anchor href="/request-reset-password">Forgot password?</Anchor>
       </div>
     </>
   );

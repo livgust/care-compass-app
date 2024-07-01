@@ -1,4 +1,12 @@
-import Link from "next/link";
+import {
+  Anchor,
+  Button,
+  PasswordInput,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import { FormEvent, useState } from "react";
 
 export default function AuthForm({
@@ -44,48 +52,48 @@ export default function AuthForm({
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <h1>{title}</h1>
-      {isFullForm && (
-        <>
-          <input
-            type="text"
-            placeholder="First Name"
-            name="first_name"
-            value={formData.first_name}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Last Name"
-            name="last_name"
-            value={formData.last_name}
-            onChange={handleInputChange}
-            required
-          />
-        </>
-      )}
-      <input
-        type="email"
-        placeholder="Email Address"
-        name="email"
-        value={formData.email}
-        onChange={handleInputChange}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Enter your Password"
-        name="password"
-        value={formData.password}
-        required
-        onChange={handleInputChange}
-      />
-      <button>{buttonText}</button>
-      <p>
-        {linkDescription}
-        <Link href={linkHref}>{linkText}</Link>
-      </p>
+      <Stack align="flex-start">
+        <Title order={1} size="h2">
+          {title}
+        </Title>
+        {isFullForm && (
+          <>
+            <TextInput
+              label="First Name"
+              name="first_name"
+              value={formData.first_name}
+              onChange={handleInputChange}
+              required
+            />
+            <TextInput
+              label="Last Name"
+              name="last_name"
+              value={formData.last_name}
+              onChange={handleInputChange}
+              required
+            />
+          </>
+        )}
+        <TextInput
+          type="email"
+          label="Email Address"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          required
+        />
+        <PasswordInput
+          label="Password"
+          name="password"
+          value={formData.password}
+          required
+          onChange={handleInputChange}
+        />
+        <Button type="submit">{buttonText}</Button>
+        <Text>
+          {linkDescription} <Anchor href={linkHref}>{linkText}</Anchor>
+        </Text>
+      </Stack>
     </form>
   );
 }

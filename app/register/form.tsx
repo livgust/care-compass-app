@@ -32,7 +32,7 @@ export default function RegistrationForm() {
     <>
       {error && <p>{error}</p>}
       <AuthForm
-        title="Register here"
+        title="Register"
         onSubmit={handleFormSubmit}
         buttonText="Register"
         linkDescription="Already have an account?"

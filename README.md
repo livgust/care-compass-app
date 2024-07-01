@@ -1,36 +1,59 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Getting Started (Dev)
 
 First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. In admin panel, create role Authenticated User without app access.
+1. Copy primary key and create a rule for data model access - allow Public role to create users when role Equals (primary key for Authenticated User)
+1. Set USER_ROLE env to primary key.
 
-## Learn More
+## Data models
 
-To learn more about Next.js, take a look at the following resources:
+### Location
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- id
+- user_created | date_created | user_updated | date_updated
+- name\*
+- type\* (City/Town - city, County/Region - region, State - state)
+- parent (M2M location)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Topic
 
-## Deploy on Vercel
+- id
+- user_created | date_created | user_updated | date_updated
+- name\*
+- parent (M2M topic)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Content
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- id
+- status
+- user_created | date_created | user_updated | date_updated
+- title\*
+- article\*
+- parent (M2M content)
+- next (M2M content)
+- age_min (0-200)
+- age_max (0-200)
+- topics (M2M topic)
+- locations (M2M location)
+
+## Permissions
+
+### Public
+
+- View all content
+
+### Authenticated User
+
+- View all content
+- Create content (draft status)
