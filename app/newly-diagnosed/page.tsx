@@ -27,7 +27,7 @@ export default async function Blog() {
         <Title mt="lg">Stories of the newly diagnosed and their families</Title>
       </Card>
       {blogPosts.map((post) => (
-        <Card shadow="sm" padding="xl">
+        <Card shadow="sm" padding="xl" key={post.id}>
           <Title>{post.title}</Title>
           <Text size="sm" c="dimmed">
             Authored {format(post.date_created, "PPP")} by {post.user_created}

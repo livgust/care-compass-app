@@ -246,7 +246,7 @@ export default async function ResourceNavigator({
               <Card shadow="sm" padding="xl">
                 <Title>No results</Title>
                 <Text mt="lg">
-                  Looks like we don't have any resources for that topic yet.
+                  Looks like we don&apos;t have any resources for that topic yet.
                   Would you like to{" "}
                   <Anchor href="/contribute">
                     contribute some knowledge of your own
@@ -256,7 +256,7 @@ export default async function ResourceNavigator({
               </Card>
             )}
             {content.map((post) => (
-              <Card shadow="sm" padding="xl">
+              <Card shadow="sm" padding="xl" key={post.id}>
                 <Title>{post.title}</Title>
                 <Text size="sm" c="dimmed">
                   Authored {format(post.date_created, "PPP")} by{" "}

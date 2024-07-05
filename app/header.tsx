@@ -1,7 +1,7 @@
 import SignOutButton from "@/components/SignOutButton";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import authOptions from "./api/auth/[...nextauth]/options";
 import { Anchor, Button, Flex, Group, Text, Title } from "@mantine/core";
 import { IconBuildingCommunity } from "@tabler/icons-react";
 
