@@ -218,8 +218,8 @@ export default async function ResourceNavigator({
 
   return (
     <Grid>
-      <GridCol span={4}>
-        <Card shadow="sm" padding="xl" mih={500}>
+      <GridCol span={{xs: 12, sm: 4}}>
+        <Card shadow="sm" padding="xl" mih={{sm: 500}}>
           <CustomTree
             data={topicTree}
             hrefBase="/resources/topic"
@@ -234,7 +234,7 @@ export default async function ResourceNavigator({
           />
         </Card>
       </GridCol>
-      <GridCol span={8}>
+      <GridCol span={{xs: 12, sm: 8}}>
         <ScrollArea>
           <Stack>
             {!(topicId || locationId) && (

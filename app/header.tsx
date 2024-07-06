@@ -7,18 +7,19 @@ import { IconBuildingCommunity } from "@tabler/icons-react";
 
 export async function Header() {
   const session = await getServerSession(authOptions);
+  
   return (
     <Flex justify="space-between">
       <Anchor href="/" underline="never">
         <Group>
           <IconBuildingCommunity size={40} stroke={1.5} />
-          <Title>It Takes a Village</Title>
+          <Title visibleFrom="xs">It Takes a Village</Title>
         </Group>
       </Anchor>
       <Group>
         {session ? (
           <>
-            <Text>Welcome, {session.user?.name}!</Text>
+            <Text visibleFrom="xs">{session.user?.name}</Text>
             <SignOutButton />
           </>
         ) : (
