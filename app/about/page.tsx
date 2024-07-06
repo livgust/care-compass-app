@@ -10,18 +10,19 @@ export default function AboutUs() {
         <Title>About It Takes a Village</Title>
         <Text>
           It Takes a Village is a resource site created by a group of moms with
-          disabled children based in the Boston area. &quot;Care momagers,&quot; if you
-          will. And though we are all in the same boat and in the same area, we
-          quickly learned that each of us had unique and helpful knowledge that
-          the others did not. Whether that was knowing about nursing, or
-          insurance, or the best doctor for a certain issue - you name it,
-          someone had insight.
+          disabled children based in the Boston area. &quot;Care momagers,&quot;
+          if you will. And though we are all in the same boat and in the same
+          area, we quickly learned that each of us had unique and helpful
+          knowledge that the others did not. Whether that was knowing about
+          nursing, or insurance, or the best doctor for a certain issue - you
+          name it, someone had insight.
         </Text>
         <Text>
           And so we wondered how we could ensure that disabled people and their
-          families and caregivers had access to this knowledge if they weren&apos;t
-          so lucky to know us? And to go even further, how could we allow people
-          who <em>we</em> didn&apos;t know, who had expertise, to share as well?
+          families and caregivers had access to this knowledge if they
+          weren&apos;t so lucky to know us? And to go even further, how could we
+          allow people who <em>we</em> didn&apos;t know, who had expertise, to
+          share as well?
         </Text>
         <Text>
           Enter It Takes a Village. Browse our resource articles and blog posts,

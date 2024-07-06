@@ -12,7 +12,7 @@ export async function POST(request: Request) {
         email,
         password,
         role: process.env.USER_ROLE,
-      })
+      }),
     );
     return NextResponse.json({ message: "Account created!" }, { status: 201 });
   } catch (e: any) {
@@ -20,13 +20,13 @@ export async function POST(request: Request) {
     if (code === "RECORD_NOT_UNIQUE") {
       return NextResponse.json(
         { message: "This user already exists." },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
     return NextResponse.json(
       { message: "An unexpected error occurred, please try again" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

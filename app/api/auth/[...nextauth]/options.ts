@@ -14,7 +14,9 @@ const authOptions: NextAuthOptions = {
         password: {},
       },
       async authorize(credentials) {
-        const user = await directus.request(login(credentials!.email, credentials!.password, {mode: 'json'})) as any as User;
+        const user = (await directus.request(
+          login(credentials!.email, credentials!.password, { mode: "json" }),
+        )) as any as User;
         if (!user) {
           throw new Error("Email address or password is invalid");
         } else {
@@ -28,20 +30,17 @@ const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
   callbacks: {
-    async jwt({
-      token,
-      user,
-      account,
-    }) {
+    async jwt({ token, user, account }) {
       if (account && user) {
         const userData = await directus.request(
           withToken(
             user.access_token as string,
             readMe({
               fields: ["id", "first_name", "last_name", "email"],
-            })
-          )
+            }),
+          ),
         );
+        console.log({ userData });
         return {
           ...token,
           accessToken: user.access_token,

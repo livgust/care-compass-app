@@ -7,7 +7,7 @@ import { IconBuildingCommunity } from "@tabler/icons-react";
 
 export async function Header() {
   const session = await getServerSession(authOptions);
-  
+
   return (
     <Flex justify="space-between">
       <Anchor href="/" underline="never">

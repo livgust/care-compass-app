@@ -1,6 +1,8 @@
 import {
   Anchor,
   Button,
+  Grid,
+  GridCol,
   PasswordInput,
   Stack,
   Text,
@@ -51,49 +53,53 @@ export default function AuthForm({
   };
 
   return (
-    <form onSubmit={handleFormSubmit}>
-      <Stack align="flex-start">
-        <Title order={1} size="h2">
-          {title}
-        </Title>
-        {isFullForm && (
-          <>
+    <Grid>
+      <GridCol span={{ xs: 8, sm: 6, md: 4 }}>
+        <form onSubmit={handleFormSubmit}>
+          <Stack>
+            <Title order={1} size="h2">
+              {title}
+            </Title>
+            {isFullForm && (
+              <>
+                <TextInput
+                  label="First Name"
+                  name="first_name"
+                  value={formData.first_name}
+                  onChange={handleInputChange}
+                  required
+                />
+                <TextInput
+                  label="Last Name"
+                  name="last_name"
+                  value={formData.last_name}
+                  onChange={handleInputChange}
+                  required
+                />
+              </>
+            )}
             <TextInput
-              label="First Name"
-              name="first_name"
-              value={formData.first_name}
+              type="email"
+              label="Email Address"
+              name="email"
+              value={formData.email}
               onChange={handleInputChange}
               required
             />
-            <TextInput
-              label="Last Name"
-              name="last_name"
-              value={formData.last_name}
-              onChange={handleInputChange}
+            <PasswordInput
+              label="Password"
+              name="password"
+              value={formData.password}
               required
+              onChange={handleInputChange}
             />
-          </>
-        )}
-        <TextInput
-          type="email"
-          label="Email Address"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          required
-        />
-        <PasswordInput
-          label="Password"
-          name="password"
-          value={formData.password}
-          required
-          onChange={handleInputChange}
-        />
-        <Button type="submit">{buttonText}</Button>
-        <Text>
-          {linkDescription} <Anchor href={linkHref}>{linkText}</Anchor>
-        </Text>
-      </Stack>
-    </form>
+            <Button type="submit">{buttonText}</Button>
+            <Text>
+              {linkDescription} <Anchor href={linkHref}>{linkText}</Anchor>
+            </Text>
+          </Stack>
+        </form>
+      </GridCol>
+    </Grid>
   );
 }

@@ -19,12 +19,12 @@ export default function RegistrationForm() {
       }),
     });
     if (response.status === 201) {
-      router.push("/");
+      router.push("/login");
       router.refresh();
     } else {
       response.status === 409
         ? setError("A user with this email already exists.")
-        : null;
+        : setError("An error occurred. Try again.");
     }
   };
 

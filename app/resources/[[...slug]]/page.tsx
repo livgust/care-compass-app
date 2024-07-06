@@ -1,3 +1,4 @@
+import ContentView from "@/components/ContentView";
 import { CustomTree } from "@/components/CustomTree";
 import directus from "@/lib/directus";
 import { Content, Topic, Location } from "@/lib/types";
@@ -37,7 +38,7 @@ function treeifyTopics(topics: Topic[], parentId: number | null): NestedItem[] {
 
 function treeifyLocations(
   locations: Location[],
-  parentId: number | null
+  parentId: number | null,
 ): NestedItem[] {
   let locationsWithParent: Location[] = [];
   let locationsWithoutParent: Location[] = [];
@@ -81,14 +82,14 @@ export default async function ResourceNavigator({
     readItems("Topic", {
       fields: ["*,parent.related_Topic_id"],
       sort: ["name"],
-    })
+    }),
   )) as Topic[];
 
   const allLocations = (await directus.request(
     readItems("Location", {
       fields: ["*,parent_location.related_Location_id"],
       sort: ["name"],
-    })
+    }),
   )) as Location[];
 
   const parentIds: number[] = [];
@@ -109,7 +110,7 @@ export default async function ResourceNavigator({
     let currentLocationId: number | null = +locationId;
     while (currentLocationId) {
       let currentLocation = allLocations.find(
-        (location) => location.id === currentLocationId
+        (location) => location.id === currentLocationId,
       );
       if (currentLocation?.parent_location.length) {
         let parentLocationId = currentLocation.parent_location[0]
@@ -127,7 +128,9 @@ export default async function ResourceNavigator({
   const content = topicId
     ? ((await directus.request(
         readItems("Content", {
-          fields: ["*,topics.Topic_id.name,locations.Location_id.name"],
+          fields: [
+            "*,user_created.*,topics.Topic_id.name,locations.Location_id.name",
+          ],
           filter: {
             _or: [
               { topics: { Topic_id: +topicId } },
@@ -165,42 +168,45 @@ export default async function ResourceNavigator({
             ],
           },
           sort: ["-date_created"],
-        })
+        }),
       )) as Content[])
     : locationId
-    ? ((await directus.request(
-        readItems("Content", {
-          fields: ["*,topics.Topic_id.name,locations.Location_id.name"],
-          filter: {
-            _or: [
-              { locations: { Location_id: +locationId } },
-              {
-                locations: {
-                  Location_id: {
-                    parent_location: { related_Location_id: +locationId },
+      ? ((await directus.request(
+          readItems("Content", {
+            fields: [
+              "*,user_created.*,topics.Topic_id.name,locations.Location_id.name",
+            ],
+            filter: {
+              _or: [
+                { locations: { Location_id: +locationId } },
+                {
+                  locations: {
+                    Location_id: {
+                      parent_location: { related_Location_id: +locationId },
+                    },
                   },
                 },
-              },
-              {
-                locations: {
-                  Location_id: {
-                    parent_location: {
-                      related_Location_id: {
-                        parent_location: { related_Location_id: +locationId },
+                {
+                  locations: {
+                    Location_id: {
+                      parent_location: {
+                        related_Location_id: {
+                          parent_location: { related_Location_id: +locationId },
+                        },
                       },
                     },
                   },
                 },
-              },
-              {
-                locations: {
-                  Location_id: {
-                    parent_location: {
-                      related_Location_id: {
-                        parent_location: {
-                          related_Location_id: {
-                            parent_location: {
-                              related_Location_id: +locationId,
+                {
+                  locations: {
+                    Location_id: {
+                      parent_location: {
+                        related_Location_id: {
+                          parent_location: {
+                            related_Location_id: {
+                              parent_location: {
+                                related_Location_id: +locationId,
+                              },
                             },
                           },
                         },
@@ -208,18 +214,17 @@ export default async function ResourceNavigator({
                     },
                   },
                 },
-              },
-            ],
-          },
-          sort: ["-date_created"],
-        })
-      )) as Content[])
-    : [];
+              ],
+            },
+            sort: ["-date_created"],
+          }),
+        )) as Content[])
+      : [];
 
   return (
     <Grid>
-      <GridCol span={{xs: 12, sm: 4}}>
-        <Card shadow="sm" padding="xl" mih={{sm: 500}}>
+      <GridCol span={{ xs: 12, sm: 4 }}>
+        <Card shadow="sm" padding="xl" mih={{ sm: 500 }}>
           <CustomTree
             data={topicTree}
             hrefBase="/resources/topic"
@@ -234,7 +239,7 @@ export default async function ResourceNavigator({
           />
         </Card>
       </GridCol>
-      <GridCol span={{xs: 12, sm: 8}}>
+      <GridCol span={{ xs: 12, sm: 8 }}>
         <ScrollArea>
           <Stack>
             {!(topicId || locationId) && (
@@ -246,8 +251,8 @@ export default async function ResourceNavigator({
               <Card shadow="sm" padding="xl">
                 <Title>No results</Title>
                 <Text mt="lg">
-                  Looks like we don&apos;t have any resources for that topic yet.
-                  Would you like to{" "}
+                  Looks like we don&apos;t have any resources for that topic
+                  yet. Would you like to{" "}
                   <Anchor href="/contribute">
                     contribute some knowledge of your own
                   </Anchor>
@@ -256,14 +261,7 @@ export default async function ResourceNavigator({
               </Card>
             )}
             {content.map((post) => (
-              <Card shadow="sm" padding="xl" key={post.id}>
-                <Title>{post.title}</Title>
-                <Text size="sm" c="dimmed">
-                  Authored {format(post.date_created, "PPP")} by{" "}
-                  {post.user_created}
-                </Text>
-                <div dangerouslySetInnerHTML={{ __html: post.article }} />
-              </Card>
+              <ContentView post={post} key={post.id} />
             ))}
           </Stack>
         </ScrollArea>

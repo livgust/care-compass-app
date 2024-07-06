@@ -1,9 +1,15 @@
 import { ISODateString } from "next-auth";
 
+export type User = {
+  first_name: string;
+  last_name: string;
+  id: string;
+};
+
 export type Content = {
   id: number;
   status: string;
-  user_created: string;
+  user_created: string | User;
   date_created: ISODateString;
   user_updated: string;
   date_updated: ISODateString;

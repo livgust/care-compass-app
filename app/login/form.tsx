@@ -26,7 +26,7 @@ export default function LoginForm() {
     } else {
       response.status === 401
         ? setError("Your email or password is incorrect.")
-        : null;
+        : setError("An error occurred. Try again.");
     }
   };
 

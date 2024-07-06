@@ -4,5 +4,5 @@ import "dotenv/config";
 export default createDirectus(process.env.BACKEND_URL!)
   .with(rest())
   .with(
-    authentication("cookie", { credentials: "include", autoRefresh: true })
+    authentication("cookie", { credentials: "include", autoRefresh: true }),
   );
