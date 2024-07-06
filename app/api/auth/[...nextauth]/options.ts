@@ -1,7 +1,7 @@
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import directus from "@/lib/directus";
-import { readMe, withToken } from "@directus/sdk";
+import { readMe, withToken, login } from "@directus/sdk";
 import { JWT } from "next-auth/jwt";
 
 const authOptions: NextAuthOptions = {
@@ -14,22 +14,12 @@ const authOptions: NextAuthOptions = {
         password: {},
       },
       async authorize(credentials) {
-        // Add logic here to look up the user from the credentials supplied
-        const res = await fetch(`${process.env.BACKEND_URL}/auth/login`, {
-          method: "POST",
-          body: JSON.stringify(credentials),
-          headers: { "Content-Type": "application/json" },
-        });
-        const user = await res.json();
-        // If no error and we have user data, return it
-        if (!res.ok && user) {
+        const user = await directus.request(login(credentials!.email, credentials!.password, {mode: 'json'})) as any as User;
+        if (!user) {
           throw new Error("Email address or password is invalid");
-        }
-        if (res.ok && user) {
+        } else {
           return user;
         }
-        // Return null if user data could not be retrieved
-        return null;
       },
     }),
   ],
@@ -46,7 +36,7 @@ const authOptions: NextAuthOptions = {
       if (account && user) {
         const userData = await directus.request(
           withToken(
-            user.data.access_token as string,
+            user.access_token as string,
             readMe({
               fields: ["id", "first_name", "last_name", "email"],
             })
@@ -54,8 +44,8 @@ const authOptions: NextAuthOptions = {
         );
         return {
           ...token,
-          accessToken: user.data.access_token,
-          refreshToken: user.data.refresh_token,
+          accessToken: user.access_token,
+          refreshToken: user.refresh_token,
           user: userData,
         } as JWT;
       }

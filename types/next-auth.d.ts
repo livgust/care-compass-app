@@ -15,10 +15,8 @@ declare module "next-auth" {
   }
 
   interface User {
-    data: {
-      access_token: string;
-      refresh_token: string;
-    }
+    access_token: string;
+    refresh_token: string;
   }
 }
 
